@@ -6,21 +6,21 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "shop_list_item")
 data class ShoppingListItem(
-    @PrimaryKey (autoGenerate = true)
+    @PrimaryKey(autoGenerate = true)
     val id: Int?,
 
-    @ColumnInfo (name = "name")
+    @ColumnInfo(name = "name")
     val name: String,
 
-    @ColumnInfo (name = "itemInfo")
+    @ColumnInfo(name = "itemInfo")
     val itemInfo: String?,
 
-    @ColumnInfo (name = "itemChecked")
+    @ColumnInfo(name = "itemChecked")
     val itemChecked: Int = 0,
 
-    @ColumnInfo (name = "listId")
+    @ColumnInfo(name = "listId")
     val listId: Int,
 
-    @ColumnInfo (name = "itemType")
+    @ColumnInfo(name = "itemType")
     val itemType: String = "item"
 )

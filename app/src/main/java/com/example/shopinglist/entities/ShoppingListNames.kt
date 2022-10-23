@@ -24,4 +24,4 @@ data class ShoppingListNames(
 
     @ColumnInfo(name = "itemIds")
     val itemIds: String
-): Serializable
+) : Serializable
