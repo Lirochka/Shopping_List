@@ -1,9 +1,13 @@
 package com.example.shopinglist.activities
 
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import com.example.shopinglist.fragments.FragmentManager
 import com.example.shopinglist.R
 import com.example.shopinglist.databinding.ActivityMainBinding
+import com.example.shopinglist.fragments.NoteFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,10 +23,18 @@ class MainActivity : AppCompatActivity() {
     private fun setButtonNavListener() {
         binding.bNav.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.settings -> {}
-                R.id.notes -> {}
-                R.id.shop_list -> {}
-                R.id.new_item -> {}
+                R.id.settings -> {
+                    Log.d("MyLog", "Settings")
+                }
+                R.id.notes -> {
+                    FragmentManager.setFragment(NoteFragment.newInstance(), this)
+                }
+                R.id.shop_list -> {
+                    Log.d("MyLog", "List")
+                }
+                R.id.new_item -> {
+                    FragmentManager.currentFrag?.onClickNew()
+                }
             }
             true
         }
