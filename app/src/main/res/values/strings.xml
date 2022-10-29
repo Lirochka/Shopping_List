@@ -7,4 +7,28 @@
 
     <string name="title_hint">Title</string>
     <string name="description">Description</string>
+    <string name="new_list">New list name</string>
+    <string name="list_name">List name</string>
+    <string name="create_list">Create list</string>
+    <string name="delete_item">Do you want delete this item?</string>
+    <string name="delete_alert">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="update">Update</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="delete_list">Delete list</string>
+    <string name="clear_list">Clear list</string>
+    <string name="share_list">Share list</string>
+    <string name="new_shop_item">New item</string>
+    <string name="save_item">Save item</string>
+    <string name="empty">Empty</string>
+    <string name="update_list_item">Update list item</string>
+    <string name="name">Name</string>
+    <string name="item_info">Item info</string>
+    <string name="update_item">Update item</string>
+    <string name="general">General</string>
+    <string name="chose_note_style">Chose note style</string>
+    <string name="chose_time_format">Chose time format</string>
+    <string name="remove_ads">Remove ads</string>
+    <string name="remove_ads_summary">Remove all ads from this app</string>
 </resources>

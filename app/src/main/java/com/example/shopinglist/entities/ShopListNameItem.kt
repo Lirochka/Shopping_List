@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import java.io.Serializable
 
 @Entity(tableName = "shopping_list_name")
-data class ShoppingListNames(
+data class ShopListNameItem(
     @PrimaryKey(autoGenerate = true)
     val id: Int?,
 

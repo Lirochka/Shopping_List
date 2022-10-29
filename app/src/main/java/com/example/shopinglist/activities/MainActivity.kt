@@ -7,9 +7,11 @@ import android.util.Log
 import com.example.shopinglist.fragments.FragmentManager
 import com.example.shopinglist.R
 import com.example.shopinglist.databinding.ActivityMainBinding
+import com.example.shopinglist.dialogs.NewListDialog
 import com.example.shopinglist.fragments.NoteFragment
+import com.example.shopinglist.fragments.ShopListNamesFragment
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NewListDialog.Listener {
 
     lateinit var binding: ActivityMainBinding
 
@@ -17,6 +19,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        FragmentManager.setFragment(ShopListNamesFragment.newInstance(), this)
         setButtonNavListener()
     }
 
@@ -30,13 +33,19 @@ class MainActivity : AppCompatActivity() {
                     FragmentManager.setFragment(NoteFragment.newInstance(), this)
                 }
                 R.id.shop_list -> {
-                    Log.d("MyLog", "List")
+                    FragmentManager.setFragment(ShopListNamesFragment.newInstance(), this)
+
                 }
                 R.id.new_item -> {
                     FragmentManager.currentFrag?.onClickNew()
+
                 }
             }
             true
         }
+    }
+
+    override fun onClick(name: String) {
+        Log.d("MyLog", "Name: $name")
     }
 }
