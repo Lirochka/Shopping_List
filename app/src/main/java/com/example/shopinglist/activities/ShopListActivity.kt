@@ -1,6 +1,7 @@
 package com.example.shopinglist.activities
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,6 +12,7 @@ import android.view.View
 import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shopinglist.R
 import com.example.shopinglist.databinding.ActivityShopListBinding
@@ -30,20 +32,21 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
     private var edItem: EditText? = null
     private var adapter: ShopListItemAdapter? = null
     private lateinit var textWatcher: TextWatcher
+    private lateinit var defPref: SharedPreferences
 
     private val mainViewModel: MainViewModel by viewModels {
         MainViewModel.MainViewModelFactory((applicationContext as MainApp).dataBase)
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityShopListBinding.inflate(layoutInflater)
+        defPref = PreferenceManager.getDefaultSharedPreferences(this)
+        setTheme(getSelectedTheme())
         setContentView(binding.root)
         init()
         initRcView()
         listItemObserver()
     }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.shop_list_menu, menu)
         saveItem = menu?.findItem(R.id.save_item)!!
@@ -54,7 +57,6 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
         textWatcher = textWatcher()
         return true
     }
-
     private fun textWatcher(): TextWatcher {
         return object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -72,7 +74,6 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
 
         }
     }
-
     private fun addNewShopItem(name: String) {
         if (name.isEmpty()) return
         val item = ShopListItem(
@@ -86,7 +87,6 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
         edItem?.setText("")
         mainViewModel.insertShopListItem(item)
     }
-
     private fun listItemObserver() {
         mainViewModel.getAllItemFromList(shopListNameItem?.id!!).observe(this, {
             adapter?.submitList(it)
@@ -97,7 +97,6 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
             }
         })
     }
-
     private fun libraryItemObserver() {
         mainViewModel.libraryItems.observe(this, {
             val tempShopList = ArrayList<ShopListItem>()
@@ -120,13 +119,11 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
             }
         })
     }
-
     private fun initRcView() = with(binding) {
         adapter = ShopListItemAdapter(this@ShopListActivity)
         rcView.layoutManager = LinearLayoutManager(this@ShopListActivity)
         rcView.adapter = adapter
     }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.save_item -> {
@@ -153,7 +150,6 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
         }
         return super.onOptionsItemSelected(item)
     }
-
     private fun expandActionView(): MenuItem.OnActionExpandListener {
         return object : MenuItem.OnActionExpandListener {
             override fun onMenuItemActionExpand(p0: MenuItem): Boolean {
@@ -178,7 +174,6 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
 
         }
     }
-
     private fun init() {
         shopListNameItem = intent.getSerializableExtra(SHOP_LIST_NAME) as ShopListNameItem
     }
@@ -199,7 +194,6 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
             }
         }
     }
-
     private fun editListItem(item: ShopListItem) {
         EditListItemDialog.showDialog(this, item, object : EditListItemDialog.Listener {
             override fun onClick(item: ShopListItem) {
@@ -208,7 +202,6 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
 
         })
     }
-
     private fun editLibraryItem(item: ShopListItem) {
         EditListItemDialog.showDialog(this, item, object : EditListItemDialog.Listener {
             override fun onClick(item: ShopListItem) {
@@ -218,7 +211,6 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
 
         })
     }
-
     private fun saveItemCount() {
         var checkedItemCounter = 0
         adapter?.currentList?.forEach {
@@ -234,6 +226,14 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
     override fun onBackPressed() {
         saveItemCount()
         super.onBackPressed()
+    }
+    private fun getSelectedTheme(): Int {
+        return if (defPref.getString("theme_key", "blue") == "blue") {
+            R.style.Theme_NewShopList
+        } else {
+            R.style.Theme_NewShopRed
+
+        }
     }
 
 }

@@ -19,4 +19,10 @@
     <color name="picker_orange">#F3420B</color>
     <color name="grey">#363636</color>
     <color name="grey_light">#959393</color>
+    <color name="blue_light">#128AEA</color>
+    <color name="blue_lightBg">#D3E4F1</color>
+    <color name="blue_dark">#095795</color>
+    <color name="red_light">#E42517</color>
+    <color name="red_lightBg">#EDB7B4</color>
+    <color name="red_dark">#A6150B</color>
 </resources>
